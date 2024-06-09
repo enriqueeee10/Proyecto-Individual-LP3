@@ -13,7 +13,9 @@ const listClientes = async () => {
                     <td>${cliente.dni}</td>
                     <td>${cliente.nombre}</td>
                     <td>${cliente.apellido}</td>
+                    <td>${cliente.correo}</td>
                     <td>${cliente.telefono}</td>
+                    <td>${cliente.direccion}</td>
                     <td>
                         <a href="/actualizarcliente?idCliente=${cliente.idcliente}" class="btn btn-success">
                             <i class="fas fa-sync-alt"></i>

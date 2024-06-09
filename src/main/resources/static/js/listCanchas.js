@@ -1,26 +1,26 @@
-const listUsuarios = async () => {
+
+const listCanchas = async () => {
     try {
-        const response = await fetch("http://localhost:9999/usuario/verusuarios");
-        const usuarios = await response.json();
-        console.log(usuarios);
+        const response = await fetch("http://localhost:9999/cancha/vercanchas");
+        const canchas = await response.json();
+        console.log(canchas);
         let content = ``;
-        usuarios.forEach((usuario) => {
-            console.log(usuario);
+        canchas.forEach((cancha) => {
+            console.log(cancha);
             content += `
                 <tr class="text-center">
-                    <td>${usuario.idusuario}</td>
-                    <td>${usuario.dni}</td>
-                    <td>${usuario.nombre}</td>
-                    <td>${usuario.apellido}</td>
-                    <td>${usuario.telefono}</td>
-                    <td>${usuario.correo}</td>
+                    <td>${cancha.idcanchafutbol}</td>
+                    <td>${cancha.codigo}</td>
+                    <td>${cancha.nombre}</td>
+                    <td>${cancha.direccion}</td>
+                    <td>${cancha.precio}</td>
                     <td>
-                        <a href="/actualizarusuario?idUsuario=${usuario.idusuario}" class="btn btn-success">
+                        <a href="/actualizarcanchas?idCancha=${cancha.idcanchafutbol}" class="btn btn-success">
                             <i class="fas fa-sync-alt"></i>
                         </a>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-warning delete-btn" data-id="${usuario.idusuario}">
+                        <button type="button" class="btn btn-warning delete-btn" data-id="${cancha.idcanchafutbol}">
                             <i class="far fa-trash-alt"></i>
                         </button>
                     </td>
@@ -31,51 +31,53 @@ const listUsuarios = async () => {
         // Añadir evento a los botones de eliminación
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', async (event) => {
-                const idUsuario = event.currentTarget.getAttribute('data-id');
+                const idcanchafutbol = event.currentTarget.getAttribute('data-id');
                 const confirmed = await Swal.fire({
                     icon: 'warning',
                     title: 'Confirmación',
-                    text: `¿Estás seguro de que deseas eliminar al usuario con ID ${idUsuario}?`,
+                    text: `¿Estás seguro de que deseas eliminar la cancha con ID ${idcanchafutbol}?`,
                     showCancelButton: true,
                     confirmButtonText: 'Sí',
                     cancelButtonText: 'Cancelar'
                 });
                 if (confirmed) {
                     try {
-                        const deleteResponse = await fetch(`/usuario/eliminarusuario/${idUsuario}`, {
+                        const deleteResponse = await fetch(`http://localhost:9999/cancha/eliminarcancha/{idcanchafutbol}`, {
                             method: 'DELETE'
                         });
                         if (!deleteResponse.ok) {
-                            throw new Error('No se pudo eliminar el usuario');
+                            throw new Error('No se pudo eliminar la cancha');
                         }
                         Swal.fire({
                             icon: 'success',
                             title: 'Éxito',
-                            text: 'Usuario eliminado correctamente'
+                            text: 'Cancha eliminada correctamente'
                         });
-                        // Recargar la lista de clientes después de eliminar
-                        listUsuarios();
+                        
+                        listCanchas();
                     } catch (error) {
-                        console.error('Error al eliminar el usuario:', error);
+                        console.error('Error al eliminar la cancha:', error);
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Error al eliminar el usuario'
+                            text: 'Error al eliminar la cancha'
                         });
                     }
                 }
             });
         });
     } catch (ex) {
-        console.error('Error al obtener la lista de usuarios:', ex);
+        console.error('Error al obtener la lista de canchas:', ex);
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Error al obtener la lista de usuarios'
+            text: 'Error al obtener la lista de canchas'
         });
     }
 };
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    listUsuarios();
+    listCanchas();
 });
+
+

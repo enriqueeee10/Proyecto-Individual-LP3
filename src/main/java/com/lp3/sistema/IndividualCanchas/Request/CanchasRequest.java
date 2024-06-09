@@ -1,13 +1,11 @@
 package com.lp3.sistema.IndividualCanchas.Request;
 
-public class CanchasRequest {
+public class canchasRequest {
 	
 	Integer idcanchafutbol;
 	String codigo;
-	String imagen;
 	String nombre;
 	String direccion;
-	Integer estado;
 	Integer precio;
 	
 	public Integer getIdcanchafutbol() {
@@ -22,12 +20,6 @@ public class CanchasRequest {
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
-	public String getImagen() {
-		return imagen;
-	}
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -39,12 +31,6 @@ public class CanchasRequest {
 	}
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
-	}
-	public Integer getEstado() {
-		return estado;
-	}
-	public void setEstado(Integer estado) {
-		this.estado = estado;
 	}
 	public Integer getPrecio() {
 		return precio;

@@ -1,4 +1,4 @@
-package com.lp3.sistema.IndividualCanchas.Controller;
+package com.lp3.sistema.IndividualCanchas.Vistas;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

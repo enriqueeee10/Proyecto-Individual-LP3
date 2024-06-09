@@ -7,6 +7,7 @@ document.getElementById("clienteForm").addEventListener("submit", async function
     const dni = document.getElementById("cliente_dni").value;
     const nombre = document.getElementById("cliente_nombre").value;
     const apellido = document.getElementById("cliente_apellido").value;
+    const correo = document.getElementById("cliente_correo").value;
     const telefono = document.getElementById("cliente_telefono").value;
     const direccion = document.getElementById("cliente_direccion").value;
 
@@ -14,6 +15,7 @@ document.getElementById("clienteForm").addEventListener("submit", async function
         dni,
         nombre,
         apellido,
+        correo,
         telefono,
         direccion
     };
@@ -61,6 +63,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             document.getElementById("cliente_dni").value = cliente.dni;
             document.getElementById("cliente_nombre").value = cliente.nombre;
             document.getElementById("cliente_apellido").value = cliente.apellido;
+            document.getElementById("cliente_correo").value = cliente.correo;
             document.getElementById("cliente_telefono").value = cliente.telefono;
             document.getElementById("cliente_direccion").value = cliente.direccion;
         } else {
@@ -82,10 +85,11 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
     event.preventDefault();
 
     const urlParams = new URLSearchParams(window.location.search);
-    const idcliente = urlParams.get('idCliente');  // Asegúrate de que el parámetro es idUsuario
+    const idcliente = urlParams.get('idCliente'); 
     const dni = document.getElementById("cliente_dni").value;
     const nombre = document.getElementById("cliente_nombre").value;
     const apellido = document.getElementById("cliente_apellido").value;
+    const correo = document.getElementById("cliente_correo").value;
     const telefono = document.getElementById("cliente_telefono").value;
     const direccion = document.getElementById("cliente_direccion").value;
 
@@ -93,6 +97,7 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
         dni,
         nombre,
         apellido,
+        correo,
         telefono,
         direccion
     };

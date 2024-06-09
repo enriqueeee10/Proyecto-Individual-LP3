@@ -12,14 +12,14 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
-            const cliente = await response.json();
+            const usuario = await response.json();
 
-            document.getElementById("usuario_dni").value = cliente.dni;
-            document.getElementById("usuario_nombre").value = cliente.nombre;
-            document.getElementById("usuario_apellido").value = cliente.apellido;
-            document.getElementById("usuario_email").value = cliente.correo;
-            document.getElementById("usuario_telefono").value = cliente.telefono;
-            document.getElementById("usuario_direccion").value = cliente.direccion;
+            document.getElementById("usuario_dni").value = usuario.dni;
+            document.getElementById("usuario_nombre").value = usuario.nombre;
+            document.getElementById("usuario_apellido").value = usuario.apellido;
+            document.getElementById("usuario_email").value = usuario.correo;
+            document.getElementById("usuario_telefono").value = usuario.telefono;
+            document.getElementById("usuario_direccion").value = usuario.direccion;
         } else {
             const responseText = await response.text();
             console.error("Respuesta no es JSON:", responseText);
@@ -39,13 +39,24 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
     event.preventDefault();
 
     const urlParams = new URLSearchParams(window.location.search);
-    const idUsuario = urlParams.get('idUsuario');  // Asegúrate de que el parámetro es idUsuario
+    const idUsuario = urlParams.get('idUsuario');
     const dni = document.getElementById("usuario_dni").value;
     const nombre = document.getElementById("usuario_nombre").value;
     const apellido = document.getElementById("usuario_apellido").value;
     const telefono = document.getElementById("usuario_telefono").value;
     const correo = document.getElementById("usuario_email").value;
     const direccion = document.getElementById("usuario_direccion").value;
+    const pass = document.getElementById("usuario_clave_1").value;
+    const passre = document.getElementById("usuario_clave_2").value;
+
+    if (pass !== passre) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Las contraseñas no coinciden',
+        });
+        return;
+    }
 
     const request = {
         roles: 1,
@@ -56,6 +67,10 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
         correo,
         direccion
     };
+
+    if (pass && passre) {
+        request.pass = pass;
+    }
 
     try {
         const response = await fetch(`http://localhost:9999/usuario/actualizarusuario/${idUsuario}`, {

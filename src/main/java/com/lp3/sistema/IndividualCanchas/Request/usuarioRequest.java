@@ -2,14 +2,16 @@ package com.lp3.sistema.IndividualCanchas.Request;
 
 public class usuarioRequest {
 
-	Integer roles;
+	Integer roles=1;
 	Integer dni;
+	Integer estado=1;
 	String nombre;
 	String apellido;
 	String correo;
 	String pass;
 	String telefono;
 	String direccion;
+	
 	
 	public Integer getRoles() {
 		return roles;
@@ -59,7 +61,10 @@ public class usuarioRequest {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	
-	
-
+	public Integer getEstado() {
+		return estado;
+	}
+	public void setEstado(Integer estado) {
+		this.estado = estado;
+	}
 }

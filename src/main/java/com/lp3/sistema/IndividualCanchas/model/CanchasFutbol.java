@@ -14,7 +14,6 @@ public class CanchasFutbol {
 
 	@Column
 	private String codigo;
-	private String imagen;
 	private String nombre;
 	private String direccion;
 	private Integer precio;
@@ -33,14 +32,6 @@ public class CanchasFutbol {
 
 	public void setIdcanchafutbol(Integer idcanchafutbol) {
 		this.idcanchafutbol = idcanchafutbol;
-	}
-
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
 	}
 
 	public String getNombre() {

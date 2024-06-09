@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-	document.getElementById("btnGuardar").addEventListener("click", async (evento) => {
+	document.getElementById("btnAceptar").addEventListener("click", async (evento) => {
 		evento.preventDefault();  // Evita que el formulario se envíe de forma predeterminada
 
 		let cancha = {
 			"codigo": document.getElementById("cancha_codigo").value,
-			"imagen": document.getElementById("cancha_img").value,
 			"nombre": document.getElementById("cancha_nombre").value,
 			"direccion": document.getElementById("cancha_direccion").value,
 			"precio": document.getElementById("cancha_precio").value
