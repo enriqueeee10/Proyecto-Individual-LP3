@@ -1,4 +1,3 @@
-
 const listCanchas = async () => {
     try {
         const response = await fetch("http://localhost:9999/cancha/vercanchas");
@@ -15,7 +14,7 @@ const listCanchas = async () => {
                     <td>${cancha.direccion}</td>
                     <td>${cancha.precio}</td>
                     <td>
-                        <a href="/actualizarcanchas?idCancha=${cancha.idcanchafutbol}" class="btn btn-success">
+                        <a href="/actualizarcancha?idCancha=${cancha.idcanchafutbol}" class="btn btn-success">
                             <i class="fas fa-sync-alt"></i>
                         </a>
                     </td>
@@ -42,7 +41,7 @@ const listCanchas = async () => {
                 });
                 if (confirmed) {
                     try {
-                        const deleteResponse = await fetch(`http://localhost:9999/cancha/eliminarcancha/{idcanchafutbol}`, {
+                        const deleteResponse = await fetch(`http://localhost:9999/cancha/eliminarcancha/${idcanchafutbol}`, {
                             method: 'DELETE'
                         });
                         if (!deleteResponse.ok) {
@@ -54,7 +53,7 @@ const listCanchas = async () => {
                             text: 'Cancha eliminada correctamente'
                         });
                         
-                        listCanchas();
+                        listCanchas(); // Actualizar la lista de canchas después de eliminar una
                     } catch (error) {
                         console.error('Error al eliminar la cancha:', error);
                         Swal.fire({
@@ -79,5 +78,3 @@ const listCanchas = async () => {
 document.addEventListener('DOMContentLoaded', (event) => {
     listCanchas();
 });
-
-

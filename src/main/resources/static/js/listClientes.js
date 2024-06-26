@@ -1,4 +1,3 @@
-
 const listClientes = async () => {
     try {
         const response = await fetch("http://localhost:9999/cliente/verclientes");
@@ -37,7 +36,7 @@ const listClientes = async () => {
                 const confirmed = await Swal.fire({
                     icon: 'warning',
                     title: 'Confirmación',
-                    text: `¿Estás seguro de que deseas eliminar al usuario con ID ${idcliente}?`,
+                    text: `¿Estás seguro de que deseas eliminar al cliente con ID ${idcliente}?`,
                     showCancelButton: true,
                     confirmButtonText: 'Sí',
                     cancelButtonText: 'Cancelar'
@@ -81,5 +80,3 @@ const listClientes = async () => {
 document.addEventListener('DOMContentLoaded', (event) => {
     listClientes();
 });
-
-

@@ -73,7 +73,7 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
     }
 
     try {
-        const response = await fetch(`http://localhost:9999/usuario/actualizarusuario/${idUsuario}`, {
+        const response = await fetch(`/usuario/actualizarusuario/${idUsuario}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

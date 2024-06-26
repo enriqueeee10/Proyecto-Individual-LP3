@@ -1,6 +1,7 @@
 package com.lp3.sistema.IndividualCanchas.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,41 +14,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.lp3.sistema.IndividualCanchas.Request.clienteRequest;
 import com.lp3.sistema.IndividualCanchas.model.Clientes;
-import com.lp3.sistema.IndividualCanchas.services.ClientesServices;
+
 
 @RestController
 @RequestMapping("/cliente")
 public class clientesController {
-    
+
     @Autowired
-    ClientesServices clienteservices;
+    ClientesRepository clientesRepository;
 
     @PostMapping("/nuevocliente")
     public void nuevoCliente(@RequestBody clienteRequest cliente) {
-        clienteservices.registrarCliente(cliente);
+        Clientes nuevoCliente = new Clientes();
+        nuevoCliente.setNombre(cliente.getNombre());
+        nuevoCliente.setDireccion(cliente.getDireccion());
+        nuevoCliente.setTelefono(cliente.getTelefono());
+        // Asigna otros campos necesarios
+        clientesRepository.save(nuevoCliente);
     }
-    
+
     @GetMapping("/verclientes")
     public List<Clientes> getclientes() {
-        return clienteservices.getclientes();
-        
+        return clientesRepository.findAll();
     }
-    
+
     @GetMapping("/vercliente/{idcliente}")
-    public Clientes getClienteid(@PathVariable int idcliente)
-    {
-    	return clienteservices.getClienteid(idcliente);
-    
+    public Clientes getClienteid(@PathVariable int idcliente) {
+        Optional<Clientes> clienteOpt = clientesRepository.findById(idcliente);
+        return clienteOpt.orElse(null);
     }
 
     @PutMapping("/actualizarcliente/{idcliente}")
     public void actualizarCliente(@PathVariable int idcliente, @RequestBody clienteRequest cliente) {
-        clienteservices.actualizarCliente(idcliente, cliente);
+        Optional<Clientes> clienteOpt = clientesRepository.findById(idcliente);
+        if (clienteOpt.isPresent()) {
+            Clientes clienteExistente = clienteOpt.get();
+            clienteExistente.setNombre(cliente.getNombre());
+            clienteExistente.setDireccion(cliente.getDireccion());
+            clienteExistente.setTelefono(cliente.getTelefono());
+            // Actualiza otros campos necesarios
+            clientesRepository.save(clienteExistente);
+        }
     }
 
     @DeleteMapping("/eliminarcliente/{idcliente}")
     public void eliminarCliente(@PathVariable Integer idcliente) {
-        clienteservices.eliminarCliente(idcliente);
+        clientesRepository.deleteById(idcliente);
     }
 }
-

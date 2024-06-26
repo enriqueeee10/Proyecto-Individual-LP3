@@ -1,35 +1,45 @@
-document.addEventListener("DOMContentLoaded", function() {
-	document.getElementById("btnAceptar").addEventListener("click", async (evento) => {
-		evento.preventDefault();  // Evita que el formulario se envíe de forma predeterminada
+document.getElementById("btnAceptar").addEventListener("click", async (evento) => {
+    evento.preventDefault();  // Evitar el envío del formulario
 
-		let cliente = {
-			"dni": document.getElementById("cliente_dni").value,
-			"nombre": document.getElementById("cliente_nombre").value,
-			"apellido": document.getElementById("cliente_apellido").value,
-			"correo": document.getElementById("cliente_correo").value,
-			"telefono": document.getElementById("cliente_telefono").value,
-			"direccion": document.getElementById("cliente_direccion").value
-		};
+    // Obtener valores de los campos de entrada
+    const dni = document.getElementById("cliente_dni").value;
+    const nombre = document.getElementById("cliente_nombre").value;
+    const apellido = document.getElementById("cliente_apellido").value;
+    const correo = document.getElementById("cliente_correo").value;
+    const telefono = document.getElementById("cliente_telefono").value;
+    const direccion = document.getElementById("cliente_direccion").value;
 
-		try {
-			const responseRegistro = await fetch("http://localhost:9999/cliente/nuevocliente", {
-				method: "POST",
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(cliente),
-			});
+    // Crear el objeto cliente
+    const cliente = {
+        dni,
+        nombre,
+        apellido,
+        correo,
+        telefono,
+        direccion,
+    };
 
-			if (!responseRegistro.ok) {
-				alert("No se pudo registrar el nuevo usuario");
-			} else {
-				alert("Cliente registrado exitosamente");
-				window.location.href = "/cliente";
-			}
-		} catch (error) {
-			alert("No se pudo registrar el nuevo usuario");
-			console.error('Error durante el registro de nuevo usuario:', error);
-		}
-	});
+    // Enviar la solicitud POST al servidor
+    try {
+        const responseRegistro = await fetch("/cliente/nuevocliente", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cliente),
+        });
+
+        // Manejar la respuesta del servidor
+        if (!responseRegistro.ok) {
+            const errorResponse = await responseRegistro.json();
+            alert(`No se pudo registrar el nuevo cliente: ${errorResponse.message || responseRegistro.statusText}`);
+        } else {
+            alert("Cliente registrado exitosamente");
+            window.location.href = "/cliente";
+        }
+    } catch (error) {
+        alert("No se pudo registrar el nuevo cliente");
+        console.error('Error durante el registro de nuevo cliente:', error);
+    }
 });

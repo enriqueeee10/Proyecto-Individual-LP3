@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lp3.sistema.IndividualCanchas.model.Roles;
-import com.lp3.sistema.IndividualCanchas.services.RolesServices;
+import com.lp3.sistema.IndividualCanchas.repository.RolRepository;
 
 @RestController
 @RequestMapping("/rol")
 public class rolesController {
-	
-	@Autowired
-	RolesServices rolesservices;
+    
+    @Autowired
+    private RolRepository rolRepository;
 
-	@PostMapping("/nuevorol")
-	public void nuevoRol(@RequestBody Roles rol) {
-		rolesservices.nuevoRol(rol);
-	}
+    @PostMapping("/nuevorol")
+    public void nuevoRol(@RequestBody Roles rol) {
+        rolRepository.save(rol);
+    }
 }

@@ -21,7 +21,7 @@ document.getElementById("clienteForm").addEventListener("submit", async function
     };
 
     try {
-        const response = await fetch(`http://localhost:9999/cliente/actualizarcliente/${idCliente}`, {
+        const response = await fetch(`/cliente/actualizarcliente/${idCliente}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const idcliente = urlParams.get('idCliente');
 
     try {
-        const response = await fetch(`http://localhost:9999/cliente/vercliente/${idcliente}`);
+        const response = await fetch(`/cliente/vercliente/${idcliente}`);
         if (!response.ok) {
             const responseText = await response.text();
             console.error("Error en la respuesta del servidor:", responseText);
@@ -103,7 +103,7 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
     };
 
     try {
-        const response = await fetch(`http://localhost:9999/cliente/actualizarcliente/${idcliente}`, {
+        const response = await fetch(`/cliente/actualizarcliente/${idcliente}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

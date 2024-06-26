@@ -102,7 +102,7 @@ public class vistaPrincipal {
 		return "item-list.html";
 	}
 	
-	@GetMapping("/actualizarcanchas")
+	@GetMapping("/actualizarcancha")
 	public String actualizarcanchas (Model model) {
 		return "item-update.html";
 	}

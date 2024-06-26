@@ -1,16 +1,26 @@
-//Actualizar canchas
+// Función para actualizar la cancha al enviar el formulario
 document.getElementById("canchaForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const urlParams = new URLSearchParams(window.location.search);
-    const idCanchaFutbol = urlParams.get('idCanchaFutbol');
+    const idCancha = urlParams.get('idCancha');
+    console.log('ID de la cancha a actualizar:', idCancha);
+    if (!idCancha) {
+        console.error('El ID de la cancha es nulo o no se encontró en la URL');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'ID de la cancha no encontrado en la URL',
+        });
+        return;
+    }
+
     const codigo = document.getElementById("cancha_codigo").value;
     const nombre = document.getElementById("cancha_nombre").value;
     const direccion = document.getElementById("cancha_direccion").value;
     const precio = document.getElementById("cancha_precio").value;
 
     const request = {
-		
         codigo,
         nombre,
         direccion,
@@ -18,7 +28,7 @@ document.getElementById("canchaForm").addEventListener("submit", async function(
     };
 
     try {
-        const response = await fetch(`http://localhost:9999/cancha/actualizarcancha/${idCanchaFutbol}`, {
+        const response = await fetch(`http://localhost:9999/cancha/actualizarcancha/${idCancha}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,27 +36,50 @@ document.getElementById("canchaForm").addEventListener("submit", async function(
             body: JSON.stringify(request),
         });
 
+        console.log('Respuesta del servidor:', response);
+
         if (!response.ok) {
+            const responseText = await response.text();
+            console.error("Error en la respuesta del servidor:", responseText);
             throw new Error("No se pudo actualizar la cancha");
         }
 
-        alert("Cancha actualizada correctamente");
-        window.location.href = "/listarcanchas";
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '¡Cancha actualizada correctamente!',
+        }).then(() => {
+            window.location.href = "/listarcanchas";
+        });
+
     } catch (error) {
         console.error('Error al actualizar la cancha:', error);
-        alert("Error al actualizar la cancha");
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al actualizar la cancha',
+        });
     }
 });
 
-
-
-
+// Función para obtener los datos de la cancha al cargar la página
 document.addEventListener("DOMContentLoaded", async function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const idcanchafutbol = urlParams.get('idCancha');
+    const idCancha = urlParams.get('idCancha');
+    console.log('ID de la cancha a obtener:', idCancha);
+
+    if (!idCancha) {
+        console.error('El ID de la cancha es nulo o no se encontró en la URL');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'ID de la cancha no encontrado en la URL',
+        });
+        return;
+    }
 
     try {
-        const response = await fetch(`http://localhost:9999/cancha/vercancha/${idcanchafutbol}`);
+        const response = await fetch(`http://localhost:9999/cancha/vercancha/${idCancha}`);
         if (!response.ok) {
             const responseText = await response.text();
             console.error("Error en la respuesta del servidor:", responseText);
@@ -76,11 +109,23 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 });
 
+// Función para actualizar la cancha al hacer clic en el botón "Actualizar"
 document.getElementById("btnActualizar").addEventListener("click", async function(event) {
     event.preventDefault();
 
     const urlParams = new URLSearchParams(window.location.search);
-    const idCanchaFutbol = urlParams.get('idCanchaFutbol');
+    const idCancha = urlParams.get('idCancha');
+    console.log('ID de la cancha a actualizar:', idCancha);
+    if (!idCancha) {
+        console.error('El ID de la cancha es nulo o no se encontró en la URL');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'ID de la cancha no encontrado en la URL',
+        });
+        return;
+    }
+
     const codigo = document.getElementById("cancha_codigo").value;
     const nombre = document.getElementById("cancha_nombre").value;
     const direccion = document.getElementById("cancha_direccion").value;
@@ -93,9 +138,8 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
         precio
     };
 
-
-  try {
-        const response = await fetch(`http://localhost:9999/cancha/actualizarcancha/${idCanchaFutbol}`, {
+    try {
+        const response = await fetch(`http://localhost:9999/cancha/actualizarcancha/${idCancha}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,12 +167,12 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
         Swal.fire({
             icon: 'success',
             title: 'Éxito',
-            text: '¡Cliente actualizado correctamente!',
+            text: '¡Cancha actualizada correctamente!',
         }).then(() => {
             window.location.href = "/listarcanchas";
         });
 
-    }  catch (error) {
+    } catch (error) {
         console.error('Error al actualizar la cancha:', error);
         Swal.fire({
             icon: 'error',
@@ -137,4 +181,3 @@ document.getElementById("btnActualizar").addEventListener("click", async functio
         });
     }
 });
-
